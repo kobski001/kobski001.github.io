@@ -8,7 +8,12 @@ export const site = {
   // Path of a file in public/, such as '/cv.pdf'. The button stays hidden while null.
   cv: null as string | null,
   // A file in public/, such as { src: '/photo.jpg', alt: '...', width: 800, height: 1000 }.
-  photo: null as { src: string; alt: string; width: number; height: number } | null,
+  photo: {
+  src: '/aboutmepicture.png',
+  alt: 'Jakob',
+  width: 800,
+  height: 1000,
+  },
   github: 'https://github.com/kobski001',
   personalLine: 'Outside of code, I spend my time on fitness and basketball.',
   credential: {
@@ -35,12 +40,7 @@ export const skills = [
       'Model evaluation',
       "McNemar's test",
     ],
-    photo: {
-    src: '/aboutmepicture.png',
-    alt: 'Jakob',
-    width: 800,
-    height: 1000,
-},
+  
   },
   {
     group: 'Tools',
@@ -54,3 +54,4 @@ export const statusLabels = {
   code: 'CODE ON GITHUB',
   research: 'RESEARCH IN PROGRESS',
 } as const;
+
