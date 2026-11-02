@@ -35,7 +35,12 @@ export const skills = [
       'Model evaluation',
       "McNemar's test",
     ],
-    photo: { src: 'public\aboutmepicture.png', alt: 'About me picture', width: 800, height: 1000 },
+    photo: {
+    src: '/aboutmepicture.png',
+    alt: 'Jakob',
+    width: 800,
+    height: 1000,
+},
   },
   {
     group: 'Tools',
