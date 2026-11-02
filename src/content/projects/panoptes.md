@@ -11,6 +11,9 @@ limitations:
   - It only knows what the four services already hold, so a report can be out of date. Stale cached data is labelled.
   - It works on public addresses only. Private and loopback IPs are rejected before any API call.
 repo: https://github.com/kobski001/panoptes
+screenshots: 
+- src: ./images/panoptes_screenshot.png
+  alt: Panoptes Dashboard (No Results Yet)
 ---
 
 Results from all four providers are normalised into one schema and cached in SQLite.

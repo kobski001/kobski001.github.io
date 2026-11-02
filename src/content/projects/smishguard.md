@@ -12,6 +12,9 @@ limitations:
   - It is a proof of concept, not a live filter.
 repo: https://github.com/jel77/smishguard
 demo: https://smishguardv1.streamlit.app/
+screenshots:
+- src: ./images/SmishGuard_screenshot.png
+  alt: SmishGuard compares three models on a sample SMS
 ---
 
 The core dataset has 4,043 messages: 2,582 smishing and 1,461 legitimate.
