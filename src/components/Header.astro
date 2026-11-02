@@ -1,0 +1,156 @@
+---
+import { site } from '../data/site';
+import { url } from '../lib/url';
+
+const links = [
+  { href: '/work/', label: 'Work' },
+  { href: '/about/', label: 'About' },
+  { href: '/notes/', label: 'Notes' },
+  { href: '/services/', label: 'Services' },
+  { href: '/contact/', label: 'Contact' },
+];
+
+const here = Astro.url.pathname;
+---
+
+<header class="header">
+  <div class="wrap header__row">
+    <a class="brand" href={url('/')}>{site.displayName ?? '[Display name]'}</a>
+    <nav aria-label="Main">
+      <ul>
+        {
+          links.map(({ href, label }) => {
+            const target = url(href);
+            const current = here === target ? 'page' : here.startsWith(target) ? 'true' : undefined;
+            return (
+              <li>
+                <a href={target} aria-current={current}>
+                  {label}
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </nav>
+    <div class="controls">
+      <button type="button" class="control" data-motion-toggle aria-label="Pause animations">
+        Pause
+      </button>
+      <button type="button" class="control" data-theme-toggle aria-label="Switch to light theme">
+        Light
+      </button>
+    </div>
+  </div>
+</header>
+
+<style>
+  .header {
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    z-index: 10;
+    background: var(--bg);
+    view-transition-name: site-header;
+  }
+
+  .header__row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      'brand controls'
+      'nav nav';
+    align-items: center;
+    column-gap: 1rem;
+    padding-block: 0.4rem;
+  }
+
+  .brand {
+    grid-area: brand;
+    min-width: 0;
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  nav {
+    grid-area: nav;
+  }
+
+  ul {
+    display: flex;
+    gap: 1.25rem;
+    list-style: none;
+  }
+
+  nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    text-transform: uppercase;
+    touch-action: manipulation;
+  }
+
+  nav a:hover {
+    color: var(--text);
+  }
+
+  nav a[aria-current] {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.45em;
+  }
+
+  .controls {
+    grid-area: controls;
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .control {
+    min-width: 4.75rem;
+    min-height: 44px;
+    padding: 0 0.6rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: none;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+
+  .control:hover:not(:disabled) {
+    border-color: var(--muted);
+    color: var(--text);
+  }
+
+  .control:disabled {
+    cursor: not-allowed;
+  }
+
+  /* Both controls need the script to work. */
+  :global(:root:not([data-theme])) .controls {
+    display: none;
+  }
+
+  @media (min-width: 640px) {
+    .header__row {
+      grid-template-columns: 1fr auto auto;
+      grid-template-areas: 'brand nav controls';
+    }
+  }
+</style>

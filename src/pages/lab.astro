@@ -1,0 +1,143 @@
+---
+import Base from '../layouts/Base.astro';
+import LetterField from '../components/LetterField.astro';
+---
+
+<Base
+  title="Letter Stream Lab"
+  description="A playable version of this site's letter background, with controls for streams, speed, trail length and colour."
+>
+  <div class="wrap">
+    <header class="page-head">
+      <h1>Lab</h1>
+      <p>This is the letter field from the home page. Change it and see what happens.</p>
+    </header>
+
+    <div class="lab">
+      <div class="lab__stage">
+        <LetterField />
+        <p class="lab__status" data-lab-status hidden></p>
+      </div>
+
+      <form class="lab__controls" data-lab-form>
+        <label>
+          <span>Streams <output name="densityOut">0.6</output></span>
+          <input type="range" name="density" min="0.1" max="2" step="0.1" value="0.6" />
+        </label>
+        <label>
+          <span>Speed <output name="speedOut">1.0</output></span>
+          <input type="range" name="speed" min="0" max="4" step="0.1" value="1" />
+        </label>
+        <label>
+          <span>Trail length <output name="trailOut">46</output></span>
+          <input type="range" name="trail" min="8" max="120" step="2" value="46" />
+        </label>
+        <fieldset>
+          <legend>Colour</legend>
+          <label class="choice"><input type="radio" name="color" value="both" checked /> Teal and blue</label>
+          <label class="choice"><input type="radio" name="color" value="teal" /> Teal</label>
+          <label class="choice"><input type="radio" name="color" value="blue" /> Blue</label>
+        </fieldset>
+        <button class="btn btn--ghost" type="reset">Reset controls</button>
+      </form>
+    </div>
+  </div>
+</Base>
+
+<script>
+  import '../scripts/lab.ts';
+</script>
+
+<style>
+  .lab {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .lab__stage {
+    position: relative;
+    isolation: isolate;
+    aspect-ratio: 16 / 10;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--bg);
+  }
+
+  .lab__status {
+    position: absolute;
+    inset: auto 0 0;
+    padding: 0.5rem 0.75rem;
+    background: var(--surface);
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+  }
+
+  .lab__controls {
+    display: grid;
+    gap: 1rem;
+    align-content: start;
+    justify-items: stretch;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+  }
+
+  .lab__controls > label {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .lab__controls label > span {
+    display: flex;
+    justify-content: space-between;
+    color: var(--muted);
+  }
+
+  output {
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+  }
+
+  input[type='range'] {
+    width: 100%;
+    min-height: 44px;
+    margin: 0;
+    accent-color: var(--accent);
+  }
+
+  fieldset {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  legend {
+    padding: 0;
+    color: var(--muted);
+  }
+
+  .choice {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    cursor: pointer;
+  }
+
+  input[type='radio'] {
+    accent-color: var(--accent);
+  }
+
+  .btn {
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  @media (min-width: 900px) {
+    .lab {
+      grid-template-columns: minmax(0, 1fr) 17rem;
+    }
+  }
+</style>

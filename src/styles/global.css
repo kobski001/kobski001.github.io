@@ -1,0 +1,475 @@
+:root {
+  color-scheme: dark;
+  --bg: #07090d;
+  --surface: #0f131a;
+  --border: #1e252e;
+  --text: #e8ecf2;
+  --muted: #8b95a5;
+  --accent: #3ddcc8;
+  --accent-2: #5b8cff;
+  --accent-ink: #04201c;
+  --glow: rgba(61, 220, 200, 0.35);
+
+  --font-display: 'Bricolage Grotesque Variable', 'Display Fallback', sans-serif;
+  --font-body: 'Instrument Sans Variable', 'Body Fallback', sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, 'Cascadia Mono', Consolas, monospace;
+
+  --content: 1216px;
+  --gutter: clamp(1rem, 4vw, 2rem);
+  --section-gap: clamp(3.5rem, 9vw, 6.5rem);
+  --radius: 2px;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  --bg: #f4f6f9;
+  --surface: #ffffff;
+  --border: #dde1e7;
+  --text: #12161c;
+  --muted: #5b6472;
+  --accent: #0b7468;
+  --accent-2: #3b63d9;
+  --accent-ink: #ffffff;
+  --glow: rgba(11, 116, 104, 0.25);
+}
+
+/* Without JavaScript no data-theme is set, so follow the system directly. */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    color-scheme: light;
+    --bg: #f4f6f9;
+    --surface: #ffffff;
+    --border: #dde1e7;
+    --text: #12161c;
+    --muted: #5b6472;
+    --accent: #0b7468;
+    --accent-2: #3b63d9;
+    --accent-ink: #ffffff;
+    --glow: rgba(11, 116, 104, 0.25);
+  }
+}
+
+@font-face {
+  font-family: 'Body Fallback';
+  src: local('Arial');
+  size-adjust: 99%;
+}
+
+@font-face {
+  font-family: 'Display Fallback';
+  src: local('Arial');
+  size-adjust: 96%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Reserves the scrollbar space on every page, so the nav stays put between pages. */
+html {
+  scrollbar-gutter: stable;
+  background: var(--bg);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-tap-highlight-color: color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  overflow-wrap: break-word;
+}
+
+main {
+  flex: 1;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: var(--accent);
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.wrap {
+  width: 100%;
+  max-width: calc(var(--content) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--gutter);
+  top: -4rem;
+  z-index: 10;
+  padding: 0.6rem 1rem;
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-radius: var(--radius);
+}
+
+.skip-link:focus {
+  top: 0.5rem;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.section {
+  padding-block: var(--section-gap) 0;
+}
+
+.section__head {
+  margin-bottom: 1.25rem;
+}
+
+.section__grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+@media (min-width: 860px) {
+  .section__grid {
+    grid-template-columns: 10rem minmax(0, 1fr);
+    gap: 2rem;
+  }
+}
+
+.page-head {
+  padding-block: clamp(3rem, 8vw, 5.5rem) 0;
+}
+
+.page-head h1 {
+  font-size: clamp(3.25rem, 9vw, 7rem);
+  font-stretch: 75%;
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+}
+
+.page-head p {
+  margin-top: 1rem;
+  max-width: 60ch;
+  color: var(--muted);
+  font-size: 1.125rem;
+}
+
+.prose {
+  max-width: 68ch;
+}
+
+.prose > * + * {
+  margin-top: 1rem;
+}
+
+.prose ul {
+  padding-left: 1.2rem;
+}
+
+.prose li + li {
+  margin-top: 0.35rem;
+}
+
+.prose h2,
+.prose h3 {
+  margin-top: 2rem;
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  list-style: none;
+}
+
+.tags li {
+  padding: 0.1rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  background: var(--surface);
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.5rem 1.15rem;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  text-transform: uppercase;
+  touch-action: manipulation;
+}
+
+.btn--primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.btn--primary:hover {
+  background: color-mix(in srgb, var(--accent) 86%, var(--text));
+}
+
+.btn--ghost {
+  background: color-mix(in srgb, var(--bg) 70%, transparent);
+  color: var(--accent);
+}
+
+.btn--ghost:hover {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+:root[data-motion='paused'] *,
+:root[data-motion='paused'] *::before,
+:root[data-motion='paused'] *::after {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* Film grain for depth. */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  opacity: 0.05;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.btn {
+  transition: transform 0.3s var(--ease);
+}
+
+/* Skipped when arriving from another page, because the page transition already moves it. */
+:root:not([data-arrived]) .page-head > * {
+  animation: page-rise 0.7s var(--ease) both;
+}
+
+@keyframes page-rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+}
+
+/* Page change: the new page rises through a clean edge while the old one drifts up and dims
+   beneath it. The header stays put and only its active link crossfades. Browsers without
+   support navigate normally. */
+::view-transition {
+  --page-time: 0.7s;
+  --page-ease: cubic-bezier(0.76, 0, 0.24, 1);
+  /* Sits behind both pages. Left unset, the browser's default shows through as the old page
+     dims and down the scrollbar strip, which is a white flash on some setups. */
+  background: var(--bg);
+}
+
+::view-transition-old(root) {
+  animation: page-leave var(--page-time) var(--page-ease) both;
+  mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+  animation: page-enter var(--page-time) var(--page-ease) both;
+  mix-blend-mode: normal;
+}
+
+::view-transition-group(site-header) {
+  animation: none;
+}
+
+::view-transition-old(site-header),
+::view-transition-new(site-header) {
+  animation-duration: 0.35s;
+}
+
+@keyframes page-leave {
+  to {
+    opacity: 0.35;
+    transform: translateY(-6vh);
+  }
+}
+
+@keyframes page-enter {
+  from {
+    clip-path: inset(100% 0 0);
+    transform: translateY(8vh);
+  }
+
+  to {
+    clip-path: inset(0);
+    transform: none;
+  }
+}
+
+/* Every page but Home has a field of numbers and symbols behind its heading. */
+.page-field {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: -1;
+  height: clamp(360px, 50vh, 460px);
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, #000 40%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 40%, transparent 100%);
+}
+
+.page-head > :not(h1) {
+  position: relative;
+  width: fit-content;
+  padding: 0.1em 0.4em;
+  margin-inline-start: -0.4em;
+  background: var(--bg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+:root[data-motion='paused']::view-transition-group(*),
+:root[data-motion='paused']::view-transition-old(*),
+:root[data-motion='paused']::view-transition-new(*) {
+  animation: none !important;
+}
+
+/* Custom cursor. It replaces the native one only while has-cursor is set. A modal dialog
+   sits above every z-index, so the native cursor comes back while the terminal is open. */
+.has-cursor:not(:has(dialog[open])),
+.has-cursor:not(:has(dialog[open])) * {
+  cursor: none !important;
+}
+
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  display: none;
+  pointer-events: none;
+}
+
+.has-cursor:not(:has(dialog[open])) .cursor {
+  display: block;
+}
+
+.cursor--dot::before,
+.cursor--ring::before {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  translate: -50% -50%;
+}
+
+/* The outline keeps the dot visible on accent buttons, where the ring would blend in. */
+.cursor--dot::before {
+  width: 7px;
+  height: 7px;
+  background: var(--text);
+  box-shadow: 0 0 0 1.5px var(--bg);
+}
+
+.cursor--ring::before {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--accent);
+  opacity: 0.6;
+  transition:
+    scale 0.3s var(--ease),
+    opacity 0.3s;
+}
+
+.cursor--ring.is-over::before {
+  scale: 1.6;
+  opacity: 0.9;
+}

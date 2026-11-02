@@ -1,0 +1,129 @@
+---
+import '@fontsource-variable/bricolage-grotesque/wdth.css';
+import '@fontsource-variable/instrument-sans/wght.css';
+import '@fontsource-variable/jetbrains-mono/wght.css';
+import '../styles/global.css';
+import bodyFont from '@fontsource-variable/instrument-sans/files/instrument-sans-latin-wght-normal.woff2?url';
+import displayFont from '@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-wdth-normal.woff2?url';
+import monoFont from '@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2?url';
+import LetterField from '../components/LetterField.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Terminal from '../components/Terminal.astro';
+import { url } from '../lib/url';
+
+interface Props {
+  title: string;
+  description: string;
+  intro?: boolean;
+}
+
+const { title, description, intro = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL(url('/og.png'), Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <!-- Chrome decides on a page transition at first render, which can come before an external
+         stylesheet loads, so this rule has to be inline. Browsers without support navigate normally. -->
+    <style is:inline>
+      @media (prefers-reduced-motion: no-preference) {
+        @view-transition {
+          navigation: auto;
+        }
+      }
+
+      /* Sets the page colour before anything paints, so a new page can never start white. */
+      html {
+        background: #07090d;
+        color-scheme: dark;
+      }
+
+      html[data-theme='light'] {
+        background: #f4f6f9;
+        color-scheme: light;
+      }
+
+      @media (prefers-color-scheme: light) {
+        html:not([data-theme]) {
+          background: #f4f6f9;
+          color-scheme: light;
+        }
+      }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#07090D" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
+    <link rel="sitemap" href={url('/sitemap-index.xml')} />
+    <link rel="preload" href={displayFont} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={bodyFont} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={monoFont} as="font" type="font/woff2" crossorigin />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script is:inline data-intro={intro ? 'on' : undefined}>
+      (() => {
+        const wantsIntro = document.currentScript.dataset.intro;
+        const root = document.documentElement;
+        let theme, motion, seen;
+        try {
+          theme = localStorage.getItem('theme');
+          motion = localStorage.getItem('motion');
+          seen = sessionStorage.getItem('intro-seen');
+        } catch {}
+        if (theme !== 'light' && theme !== 'dark') {
+          theme = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        }
+        root.dataset.theme = theme;
+        if (motion === 'paused') root.dataset.motion = 'paused';
+        const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const arrived = document.referrer.startsWith(location.origin);
+        if (arrived) root.dataset.arrived = '';
+        if (wantsIntro && !seen && !arrived && !reduced && motion !== 'paused') root.dataset.intro = 'on';
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Header />
+    <main id="main" tabindex="-1">
+      {
+        !intro && (
+          <div class="page-field">
+            <LetterField symbols />
+          </div>
+        )
+      }
+      <slot />
+    </main>
+    <Footer />
+    <Terminal />
+    <script>
+      import '../scripts/controls.ts';
+      import '../scripts/interactions.ts';
+      import '../scripts/terminal.ts';
+      import '../scripts/page-field.ts';
+    </script>
+  </body>
+</html>
+
+<style>
+  main {
+    position: relative;
+  }
+
+  main:focus {
+    outline: none;
+  }
+</style>

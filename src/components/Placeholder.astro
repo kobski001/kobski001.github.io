@@ -1,0 +1,56 @@
+---
+// Marks content the owner still has to supply. Search for data-placeholder to find them all.
+interface Props {
+  text: string;
+  block?: boolean;
+  ratio?: string;
+}
+
+const { text, block = false, ratio } = Astro.props;
+---
+
+{
+  block ? (
+    <div class="ph ph--block" style={ratio ? `aspect-ratio: ${ratio}` : undefined} data-placeholder>
+      {text}
+    </div>
+  ) : (
+    <span class="ph" data-placeholder>
+      {text}
+    </span>
+  )
+}
+
+<style>
+  .ph {
+    padding: 0.05em 0.35em;
+    border: 1px dashed var(--muted);
+    border-radius: 3px;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+  }
+
+  .ph--block {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    padding: 1rem;
+    --tick: var(--accent);
+    border-style: solid;
+    border-color: var(--border);
+    border-radius: var(--radius);
+    background:
+      linear-gradient(var(--tick), var(--tick)) 0 0 / 14px 1px,
+      linear-gradient(var(--tick), var(--tick)) 0 0 / 1px 14px,
+      linear-gradient(var(--tick), var(--tick)) 100% 0 / 14px 1px,
+      linear-gradient(var(--tick), var(--tick)) 100% 0 / 1px 14px,
+      linear-gradient(var(--tick), var(--tick)) 0 100% / 14px 1px,
+      linear-gradient(var(--tick), var(--tick)) 0 100% / 1px 14px,
+      linear-gradient(var(--tick), var(--tick)) 100% 100% / 14px 1px,
+      linear-gradient(var(--tick), var(--tick)) 100% 100% / 1px 14px,
+      var(--surface);
+    background-repeat: no-repeat;
+    text-align: center;
+  }
+</style>

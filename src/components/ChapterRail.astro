@@ -1,0 +1,94 @@
+---
+interface Props {
+  chapters: { id: string; label: string }[];
+}
+
+const { chapters } = Astro.props;
+---
+
+<div class="progress" aria-hidden="true"><span data-progress></span></div>
+<nav class="rail" aria-label="Chapters">
+  <ol>
+    {
+      chapters.map(({ id, label }, index) => (
+        <li>
+          <a href={`#${id}`} data-chapter-link aria-current={index === 0 ? 'true' : undefined}>
+            <span class="rail__tick"></span>
+            <span class="rail__label">{label}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+</nav>
+
+<style>
+  .progress {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 30;
+    height: 2px;
+    pointer-events: none;
+  }
+
+  .progress span {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-2), var(--accent));
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  .rail {
+    display: none;
+  }
+
+  @media (min-width: 1360px) {
+    .rail {
+      display: block;
+      position: fixed;
+      top: 50%;
+      left: 1.25rem;
+      z-index: 20;
+      transform: translateY(-50%);
+    }
+  }
+
+  ol {
+    display: grid;
+    gap: 0.1rem;
+    list-style: none;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 28px;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-decoration: none;
+  }
+
+  .rail__tick {
+    width: 14px;
+    height: 1px;
+    background: currentColor;
+  }
+
+  .rail__label {
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  a:hover,
+  a[aria-current] {
+    color: var(--accent);
+  }
+
+  a:hover .rail__label,
+  a:focus-visible .rail__label {
+    opacity: 1;
+  }
+</style>

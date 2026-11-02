@@ -1,0 +1,57 @@
+---
+import Placeholder from './Placeholder.astro';
+import { site } from '../data/site';
+---
+
+<ul class="contact">
+  <li>
+    <span class="label">Email</span>
+    {
+      site.email ? (
+        <a href={`mailto:${site.email}`}>{site.email}</a>
+      ) : (
+        <Placeholder text="[Email coming soon]" />
+      )
+    }
+  </li>
+  <li>
+    <span class="label">GitHub</span>
+    <a href={site.github}>{site.github.replace('https://', '')}</a>
+  </li>
+  <li>
+    <span class="label">LinkedIn</span>
+    {
+      site.linkedin ? (
+        <a href={site.linkedin}>{site.linkedin.replace('https://www.', '')}</a>
+      ) : (
+        <Placeholder text="[LinkedIn coming soon]" />
+      )
+    }
+  </li>
+</ul>
+
+<style>
+  .contact {
+    display: grid;
+    list-style: none;
+  }
+
+  li {
+    display: grid;
+    gap: 0.1rem;
+    padding-block: 0.7rem;
+    border-bottom: 1px solid var(--border);
+    justify-items: start;
+  }
+
+  li:first-child {
+    padding-top: 0;
+  }
+
+  @media (min-width: 480px) {
+    li {
+      grid-template-columns: 6rem minmax(0, 1fr);
+      align-items: baseline;
+    }
+  }
+</style>

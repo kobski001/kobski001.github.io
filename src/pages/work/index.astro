@@ -1,0 +1,30 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<Base
+  title="Selected Work"
+  description="Security projects: Panoptes, a passive OSINT dashboard; SmishGuard, a smishing detector; and WebGuard, research in progress on CVE exploitation."
+>
+  <div class="wrap">
+    <header class="page-head">
+      <h1>Work</h1>
+      <p>Each project shows whether it is live or still in progress, and states its limitations.</p>
+    </header>
+    <div class="list">
+      {projects.map((project) => <ProjectCard project={project} headingLevel="h2" />)}
+    </div>
+  </div>
+</Base>
+
+<style>
+  .list {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+  }
+</style>

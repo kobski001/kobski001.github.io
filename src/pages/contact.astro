@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import ContactLinks from '../components/ContactLinks.astro';
+---
+
+<Base title="Get in Touch" description="Contact details for internship, OJT and first-job opportunities.">
+  <div class="wrap">
+    <header class="page-head">
+      <h1>Contact</h1>
+      <p>I’m looking for internships, OJT and first jobs in security, networking, ML or software.</p>
+    </header>
+    <div class="links"><ContactLinks /></div>
+  </div>
+</Base>
+
+<style>
+  .links {
+    max-width: 36rem;
+    margin-top: 2.5rem;
+  }
+</style>

@@ -1,0 +1,59 @@
+---
+import { site } from '../data/site';
+import { url } from '../lib/url';
+---
+
+<footer class="footer">
+  <div class="wrap footer__row">
+    <p>{site.displayName ?? '[Display name]'}</p>
+    <div class="footer__links">
+      <a href={url('/lab/')}>Lab</a>
+      <button type="button" data-terminal-open aria-label="Open terminal" title="Open terminal">&gt;_</button>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    margin-top: var(--section-gap);
+    border-top: 1px solid var(--border);
+  }
+
+  .footer__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding-block: 0.75rem;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+  }
+
+  .footer__links {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  a,
+  button {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--muted);
+  }
+
+  button {
+    padding: 0 0.25rem;
+    border: 0;
+    background: none;
+    font: inherit;
+    cursor: pointer;
+  }
+
+  a:hover,
+  button:hover {
+    color: var(--text);
+  }
+</style>

@@ -1,0 +1,141 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+import Placeholder from './Placeholder.astro';
+import StatusBadge from './StatusBadge.astro';
+import WebguardDiagram from './WebguardDiagram.astro';
+import { url } from '../lib/url';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  headingLevel?: 'h2' | 'h3';
+}
+
+const { project, headingLevel: Heading = 'h3' } = Astro.props;
+const { title, summary, stack, status, credit, diagram, screenshots } = project.data;
+const shot = screenshots[0];
+const tags = status === 'research' ? stack.slice(0, 3) : stack;
+---
+
+<article class="card">
+  <div class="card__inner">
+    <div class="card__body">
+      <StatusBadge status={status} />
+      <Heading class="card__title">
+        <a href={url(`/work/${project.id}/`)} translate="no">{title}</a>
+      </Heading>
+      <p>{summary}</p>
+      <p class="card__credit">{credit}</p>
+      <ul class="tags">{tags.map((item) => <li>{item}</li>)}</ul>
+    </div>
+    <div class="card__media">
+      {
+        shot ? (
+          <Image src={shot.src} alt={shot.alt} width={640} />
+        ) : diagram ? (
+          <WebguardDiagram compact />
+        ) : (
+          <Placeholder block text="[Screenshot coming soon]" ratio="16 / 10" />
+        )
+      }
+    </div>
+  </div>
+</article>
+
+<style>
+  .card {
+    position: relative;
+  }
+
+  .card__inner {
+    position: relative;
+    display: grid;
+    gap: 1.5rem;
+    padding: clamp(1rem, 3vw, 2rem);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .card:hover .card__inner {
+    border-color: var(--accent);
+  }
+
+  .card__media {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    min-width: 0;
+    container-type: inline-size;
+    overflow: hidden;
+    border-radius: var(--radius);
+  }
+
+  .card__media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .card__body {
+    position: relative;
+    display: grid;
+    gap: 0.6rem;
+    justify-items: start;
+    align-content: start;
+    min-width: 0;
+  }
+
+  .card__title {
+    font-size: clamp(2.75rem, 6vw, 4.75rem);
+    font-stretch: 75%;
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.015em;
+    text-transform: uppercase;
+  }
+
+  .card__title a {
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  /* The whole card is the link target. */
+  .card__title a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+  }
+
+  .card:hover .card__title a {
+    color: var(--accent);
+  }
+
+  .card__title a:focus-visible {
+    outline: none;
+  }
+
+  .card:has(a:focus-visible) {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .card__credit {
+    color: var(--muted);
+    font-size: 0.9375rem;
+  }
+
+  @media (min-width: 720px) {
+    .card__inner {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 2rem;
+      align-items: center;
+    }
+  }
+</style>
+
+<style is:global>
+  .card__title a::after {
+    inset: calc(-1 * clamp(1rem, 3vw, 2rem));
+  }
+</style>

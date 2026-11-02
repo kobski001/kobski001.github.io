@@ -1,0 +1,28 @@
+---
+import Placeholder from './Placeholder.astro';
+import { site } from '../data/site';
+import { url } from '../lib/url';
+
+const { photo } = site;
+---
+
+{
+  photo ? (
+    <img
+      class="photo"
+      src={url(photo.src)}
+      alt={photo.alt}
+      width={photo.width}
+      height={photo.height}
+      loading="lazy"
+    />
+  ) : (
+    <Placeholder block text="[Photo coming soon]" ratio="4 / 5" />
+  )
+}
+
+<style>
+  .photo {
+    border-radius: var(--radius);
+  }
+</style>

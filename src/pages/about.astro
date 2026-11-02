@@ -1,0 +1,109 @@
+---
+import Base from '../layouts/Base.astro';
+import Certification from '../components/Certification.astro';
+import Photo from '../components/Photo.astro';
+import Placeholder from '../components/Placeholder.astro';
+import { site } from '../data/site';
+import { url } from '../lib/url';
+---
+
+<Base
+  title="About Me"
+  description="Background, education and goals of a BS Computer Science student at De La Salle University–Dasmariñas heading into cybersecurity."
+>
+  <div class="wrap">
+    <header class="page-head">
+      <h1>About</h1>
+    </header>
+
+    <div class="about">
+      <div class="about__photo"><Photo /></div>
+      <div class="prose">
+        <p>{site.bio ?? <Placeholder text="[Bio coming soon]" />}</p>
+        <p>
+          I’m a 3rd-year BS Computer Science student heading toward cybersecurity. On my projects, I say
+          what is finished and what is in progress.
+        </p>
+      </div>
+    </div>
+
+    <div class="rows">
+      <section class="section__grid">
+        <h2 class="label">Education</h2>
+        <p>BS Computer Science, De La Salle University–Dasmariñas</p>
+      </section>
+
+      <section class="section__grid">
+        <h2 class="label">Certifications</h2>
+        <Certification />
+      </section>
+
+      <section class="section__grid">
+        <h2 class="label">Working toward</h2>
+        <div class="prose">
+          <p>Cybersecurity first. Networking, machine learning, data analysis and web development are my secondary options.</p>
+        </div>
+      </section>
+
+      <section class="section__grid">
+        <h2 class="label">Interests</h2>
+        <div class="prose">
+          <p>{site.personalLine}</p>
+        </div>
+      </section>
+
+      <section class="section__grid">
+        <h2 class="label">This site, taken apart</h2>
+        <ul class="tags tags--plain">
+          <li>Static pages built with Astro, with no UI framework</li>
+          <li>The hero letters are plain CSS text, with one small canvas lighting them up</li>
+          <li>Scroll effects use GSAP and Lenis, and only load on the home page</li>
+          <li>Pause animations, or turn on reduced motion, and the plain page is still all there</li>
+          <li>Fonts are self-hosted, so there are no third-party requests</li>
+          <li>Press the backtick key for a terminal, or try the <a href={url('/lab/')}>Lab</a></li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .about {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .about__photo {
+    max-width: 240px;
+  }
+
+  .tags--plain {
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .tags--plain li {
+    padding: 0;
+    border: 0;
+    background: none;
+    font-size: 0.875rem;
+  }
+
+  .tags--plain a {
+    color: var(--accent);
+  }
+
+  .rows {
+    display: grid;
+    gap: 2.75rem;
+    margin-top: 3rem;
+  }
+
+  @media (min-width: 640px) {
+    .about {
+      grid-template-columns: 240px minmax(0, 1fr);
+      gap: 2rem;
+    }
+  }
+</style>

@@ -1,0 +1,142 @@
+---
+import { getCollection } from 'astro:content';
+import { site, skills, statusLabels } from '../data/site';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+
+const projectCommands = Object.fromEntries(
+  projects.map(({ id, data }) => [
+    id,
+    [
+      `${data.title} [${statusLabels[data.status]}]`,
+      data.summary,
+      data.credit,
+      ...(data.repo ? [`repo: ${data.repo}`] : []),
+      ...(data.demo ? [`demo: ${data.demo}`] : []),
+    ],
+  ]),
+);
+
+const contact = [
+  `github: ${site.github}`,
+  ...(site.email ? [`email: ${site.email}`] : []),
+  ...(site.linkedin ? [`linkedin: ${site.linkedin}`] : []),
+];
+
+const facts = {
+  commands: {
+    whoami: [
+      '3rd-year BS Computer Science student at De La Salle University–Dasmariñas.',
+      'Heading toward cybersecurity. Networking, machine learning, data analysis and web development are secondary options.',
+    ],
+    projects: projects.map(({ data }) => `${data.title}: ${data.summary}`),
+    ...projectCommands,
+    skills: skills.map(({ group, items }) => `${group}: ${items.join(', ')}`),
+    contact,
+  },
+};
+---
+
+<dialog class="terminal" data-terminal aria-label="Terminal">
+  <div class="terminal__bar">
+    <span>Terminal</span>
+    <button type="button" data-terminal-close>Close</button>
+  </div>
+  <div class="terminal__log" data-terminal-log role="log" aria-live="polite"></div>
+  <form class="terminal__prompt" autocomplete="off">
+    <label for="terminal-input">$</label>
+    <input
+      id="terminal-input"
+      name="command"
+      type="text"
+      spellcheck="false"
+      autocapitalize="off"
+      autocomplete="off"
+    />
+  </form>
+</dialog>
+<script type="application/json" data-terminal-facts set:html={JSON.stringify(facts)} />
+
+<style>
+  .terminal {
+    width: min(42rem, calc(100vw - 2rem));
+    max-height: min(32rem, 80dvh);
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+  }
+
+  .terminal[open] {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .terminal::backdrop {
+    background: color-mix(in srgb, var(--bg) 70%, transparent);
+  }
+
+  .terminal__bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-inline: 0.75rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  .terminal__bar button {
+    min-height: 44px;
+    border: 0;
+    background: none;
+    color: var(--muted);
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .terminal__bar button:hover {
+    color: var(--text);
+  }
+
+  .terminal__log {
+    flex: 1;
+    display: grid;
+    align-content: start;
+    gap: 0.25rem;
+    min-height: 12rem;
+    padding: 0.75rem;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .terminal__log :global(.is-command) {
+    color: var(--accent);
+  }
+
+  .terminal__prompt {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .terminal__prompt label {
+    color: var(--accent);
+  }
+
+  .terminal__prompt input {
+    flex: 1;
+    min-width: 0;
+    min-height: 44px;
+    border: 0;
+    outline: none;
+    background: none;
+    color: var(--text);
+    font: inherit;
+    font-size: 1rem;
+  }
+</style>

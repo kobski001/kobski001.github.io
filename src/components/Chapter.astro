@@ -1,0 +1,67 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  stage?: boolean;
+}
+
+const { id, title, stage = false } = Astro.props;
+---
+
+<section
+  class="chapter"
+  id={id}
+  data-chapter
+  data-stage-section={stage ? '' : undefined}
+  aria-labelledby={`${id}-heading`}
+>
+  <div class="wrap">
+    <header class="chapter__head">
+      <h2 id={`${id}-heading`}>
+        {
+          title.split(' ').map((word) => (
+            <>
+              <span class="word">
+                <span>{word}</span>
+              </span>{' '}
+            </>
+          ))
+        }
+      </h2>
+    </header>
+    <slot />
+  </div>
+</section>
+
+<style>
+  .chapter {
+    padding-block: var(--section-gap) 0;
+    scroll-margin-top: 0;
+    overflow-x: clip;
+  }
+
+  .chapter__head {
+    margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  h2 {
+    font-size: clamp(2.5rem, 7vw, 5.25rem);
+    font-stretch: 75%;
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.015em;
+    text-transform: uppercase;
+    text-wrap: wrap;
+  }
+
+  .word {
+    display: inline-block;
+    overflow: clip;
+    overflow-clip-margin: 0.08em;
+    vertical-align: top;
+  }
+
+  .word > span {
+    display: inline-block;
+  }
+</style>

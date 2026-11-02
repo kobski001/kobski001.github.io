@@ -1,0 +1,30 @@
+---
+import { statusLabels } from '../data/site';
+
+interface Props {
+  status: keyof typeof statusLabels;
+}
+
+const { status } = Astro.props;
+---
+
+<span class:list={['badge', { 'badge--live': status === 'live' }]}>{statusLabels[status]}</span>
+
+<style>
+  .badge {
+    display: inline-block;
+    padding: 0.1rem 0.5rem;
+    border: 1px solid var(--muted);
+    border-radius: 3px;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .badge--live {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+</style>

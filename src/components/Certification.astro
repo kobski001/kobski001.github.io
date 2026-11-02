@@ -1,0 +1,22 @@
+---
+import { site } from '../data/site';
+
+const { credential } = site;
+---
+
+<p>
+  <a href={credential.url}>{credential.name}</a>
+  <span class="issued">Credly badge issued to {credential.issuedTo}</span>
+</p>
+
+<style>
+  a {
+    font-weight: 600;
+  }
+
+  .issued {
+    display: block;
+    color: var(--muted);
+    font-size: 0.9375rem;
+  }
+</style>
