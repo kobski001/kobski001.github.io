@@ -4,7 +4,7 @@ summary: Research proposal on predicting how likely a published web-application 
 order: 3
 status: research
 problem: WebGuard is a research proposal to predict how likely a published web-application vulnerability (CVE) is to be exploited. The output is a probability that website owners could use to prioritise patching.
-credit: Team project with two other authors
+credit: Team project, 3 members, DLSU-D
 stack: [NVD, CISA KEV, Exploit-DB, Logistic Regression, Decision Tree, Random Forest, XGBoost]
 limitations:
   - This is a proposal. There are no results to report yet.

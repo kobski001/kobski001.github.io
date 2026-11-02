@@ -20,13 +20,25 @@ export const site = {
 
 export const skills = [
   { group: 'Languages', items: ['Python', 'Java', 'Learning C'] },
+  { group: 'Frameworks', items: ['Streamlit', 'pytest', 'Astro'] },
   {
     group: 'ML and data',
-    items: ['scikit-learn', 'TF-IDF', 'Model evaluation', 'Statistical testing'],
+    items: [
+      'scikit-learn',
+      'TF-IDF',
+      'Text classification',
+      'Feature engineering',
+      'Logistic Regression',
+      'Decision Tree',
+      'SVM',
+      'Cross-validation',
+      'Model evaluation',
+      "McNemar's test",
+    ],
   },
   {
     group: 'Tools',
-    items: ['Git/GitHub', 'Docker', 'Kubernetes', 'Node.js', 'MySQL', 'Streamlit', 'pytest'],
+    items: ['Kali Linux', 'Git/GitHub', 'Docker', 'Kubernetes', 'Node.js', 'MySQL'],
   },
   { group: 'Security', items: ['Cisco Introduction to Cybersecurity'] },
 ];

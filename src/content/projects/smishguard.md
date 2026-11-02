@@ -4,7 +4,7 @@ summary: Streamlit app that detects banking and online-payment smishing in Filip
 order: 2
 status: live
 problem: SmishGuard detects banking and online-payment smishing in Filipino and Taglish SMS. It compares Logistic Regression, Decision Tree and SVM models using TF-IDF plus 11 hand-built features, such as links, shorteners, suspicious TLDs, urgency and money words, and sender type.
-role: I did most of the programming.
+role: Main Programmer.
 credit: Team project, 3 members, DLSU-D
 stack: [Python, Streamlit, scikit-learn, TF-IDF]
 limitations:
