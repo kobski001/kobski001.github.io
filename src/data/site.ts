@@ -9,10 +9,10 @@ export const site = {
   cv: null as string | null,
   // A file in public/, such as { src: '/photo.jpg', alt: '...', width: 800, height: 1000 }.
   photo: {
-  src: '/aboutmepicture.png',
-  alt: 'Jakob',
-  width: 800,
-  height: 1000,
+    src: '/aboutmepicture.png',
+    alt: 'Jakob',
+    width: 724,
+    height: 774,
   },
   github: 'https://github.com/kobski001',
   personalLine: 'Outside of code, I spend my time on fitness and basketball.',
@@ -54,4 +54,3 @@ export const statusLabels = {
   code: 'CODE ON GITHUB',
   research: 'RESEARCH IN PROGRESS',
 } as const;
-
