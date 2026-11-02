@@ -3,3 +3,11 @@ dist/
 .astro/
 *.log
 .DS_Store
+
+# Local working notes and AI tooling
+.claude/
+CLAUDE.md
+DECISIONS.md
+DESIGN.md
+handoff.md
+skills-lock.json
